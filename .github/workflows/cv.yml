@@ -1,0 +1,28 @@
+name: Armors Extract
+
+on: 
+    workflow_dispatch:
+        inputs:
+            input_content:
+                required: true
+env:
+    input_content: ${{ github.event.inputs.input_content }}
+jobs:
+    extract:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+            - uses: actions/setup-python@v5
+              with:
+                  python-version: '3.11'
+            - name: Install dependencies
+              run: |
+                  python -m pip install --upgrade pip
+                  pip install -r requirements.txt
+            - name: Extract Armors
+              run: python extract.py
+            - uses: actions/upload-artifact@v4
+              with:
+                name: ArmorExtract
+                path: output
