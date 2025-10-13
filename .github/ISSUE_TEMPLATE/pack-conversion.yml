@@ -1,67 +1,69 @@
-name: Pack Conversion
-description: Request an automated pack conversion
-title: "[Pack]: "
+name: Yêu cầu Chuyển đổi Gói tài nguyên
+description: Gửi yêu cầu chuyển đổi gói tài nguyên tự động
+title: "[Gói]: "
 labels: ["conversion"]
 body:
   - type: markdown
     attributes:
       value: |
-        Please be sure to include a directly downloadable link to your pack. The action will fail if the pack cannot be downloaded.
+        Vui lòng đảm bảo bạn cung cấp một liên kết tải trực tiếp đến gói của bạn. Quy trình sẽ thất bại nếu không thể tải gói về.
   - type: input
     id: java-pack-direct-download-url
     attributes:
-      label: Java Pack Direct Download URL
-      description: Please provide a direct link to the Java Edition resource pack to be converted.
-      placeholder: e.g. https://github.com/Paradisu/ParadisuResourcePack/releases/latest/download/ParadisuResourcePack.zip
+      label: URL Tải trực tiếp Gói Java
+      description: Vui lòng cung cấp một liên kết trực tiếp đến gói tài nguyên Java Edition cần chuyển đổi.
+      placeholder: VD: https://github.com/Paradisu/ParadisuResourcePack/releases/latest/download/ParadisuResourcePack.zip
     validations:
       required: true
   - type: input
     id: default-pack-direct-download-url
     attributes:
-      label: Default Pack Direct Download URL
-      description: Optionally provide a direct link to a Java Edition resource pack to be used for default textures before the vanilla default pack.
-      placeholder: e.g. https://github.com/Paradisu/ParadisuResourcePack/releases/latest/download/ParadisuResourcePack.zip
+      label: URL Tải Gói Mặc định (Tùy chọn)
+      description: Tùy chọn, cung cấp liên kết trực tiếp đến một gói tài nguyên Java khác để sử dụng làm texture mặc định (sẽ được ưu tiên hơn gói vanilla mặc định).
+      placeholder: VD: https://github.com/Paradisu/ParadisuResourcePack/releases/latest/download/ParadisuResourcePack.zip
     validations:
       required: false
   - type: input
     id: bedrock-merge-pack-direct-download-url
     attributes:
-      label: Bedrock Merge Pack Direct Download URL
-      description: Optionally provide a direct link to the Bedrock Edition resource pack to be merged into the converted pack.
-      placeholder: e.g. https://github.com/Kas-tle/imaginefun-bedrock-rp/releases/download/1.1.3/imaginefun_rp-v1.1.3.mcpack
+      label: URL Gói Bedrock để Hợp nhất (Tùy chọn)
+      description: Tùy chọn, cung cấp liên kết trực tiếp đến một gói tài nguyên Bedrock Edition để hợp nhất vào gói đã chuyển đổi.
+      placeholder: VD: https://github.com/Kas-tle/imaginefun-bedrock-rp/releases/download/1.1.3/imaginefun_rp-v1.1.3.mcpack
     validations:
       required: false
   - type: dropdown
     id: default-assets-version
     attributes:
-      label: Default Assets Version
-      description: Optinally select the default assets version to use for the converted pack.
+      label: Phiên bản Tài nguyên Mặc định
+      description: Tùy chọn, chọn phiên bản tài nguyên mặc định để sử dụng cho gói chuyển đổi.
       options:
-        - 1.13.2
-        - 1.14.4
-        - 1.15.2
         - 1.16.5
         - 1.17.1
         - 1.18.2
-        - 1.19.2
-        - 1.19.3
         - 1.19.4
-        - '1.20'
         - 1.20.1
+        - 1.20.4
+        - 1.20.6
+        - 1.21
+        - 1.21.1
+        - 1.21.4
+        - 1.21.8
+        - 1.21.9
+        - 1.21.10
     validations:
       required: false
 
   - type: dropdown
     id: block-material
     attributes:
-      label: Block Material
+      label: Vật liệu Khối (Block Material)
       description: |
-        Please provide a block material to be used in the script. If one is not selected, `alpha_test` will be used. 
-        See the [Bedrock Wiki](https://wiki.bedrock.dev/blocks/block-materials.html) for more info.
-          - `opaque`: no support for transparent or translucent pixels and renders only on outside faces
-          - `alpha_test`: support for transparent pixels and renders only on outside faces
-          - `blend`: support for translucent pixels and renders only on outside faces
-          - `double_sided`: no support for transparent or translucent pixels. but renders both outside and inside faces
+        Vui lòng chọn một vật liệu khối để sử dụng. Nếu không chọn, `alpha_test` sẽ được sử dụng.
+        Xem thêm tại [Bedrock Wiki](https://wiki.bedrock.dev/blocks/block-materials.html).
+          - `opaque`: không hỗ trợ pixel trong suốt hoặc mờ, chỉ render mặt ngoài
+          - `alpha_test`: hỗ trợ pixel trong suốt, chỉ render mặt ngoài
+          - `blend`: hỗ trợ pixel mờ, chỉ render mặt ngoài
+          - `double_sided`: không hỗ trợ pixel trong suốt hoặc mờ, nhưng render cả mặt trong và mặt ngoài
       options:
         - opaque
         - alpha_test
@@ -72,14 +74,14 @@ body:
   - type: dropdown
     id: attachable-material
     attributes:
-      label: Attachable Material
+      label: Vật liệu Vật thể đính kèm (Attachable Material)
       description: |
-        Please provide an attachable material to be used in the script. If one is not selected, `entity_alphatest_one_sided` will be used. 
-        See the [Bedrock Wiki](https://wiki.bedrock.dev/documentation/materials.html) for more info.
-          - `entity`: basic opaque material with no support for transparent or translucent pixels
-          - `entity_alphatest`: supports transparent pixels but lacks backface culling, which will cause z-fighting on thin elements
-          - `entity_alphablend`: supports translucent pixels and backface culling, though objects behind may render inconsistently
-          - `entity_alphatest_one_sided`: supports transparent pixels and backface culling
+        Vui lòng chọn một vật liệu attachable để sử dụng. Nếu không chọn, `entity_alphatest_one_sided` sẽ được sử dụng.
+        Xem thêm tại [Bedrock Wiki](https://wiki.bedrock.dev/documentation/materials.html).
+          - `entity`: vật liệu đục cơ bản, không hỗ trợ pixel trong suốt hoặc mờ
+          - `entity_alphatest`: hỗ trợ pixel trong suốt nhưng có thể bị lỗi z-fighting
+          - `entity_alphablend`: hỗ trợ pixel mờ
+          - `entity_alphatest_one_sided`: hỗ trợ pixel trong suốt và render một mặt
       options:
         - entity
         - entity_alphatest
@@ -91,91 +93,91 @@ body:
   - type: dropdown
     id: archive-scratch
     attributes:
-      label: Archive Scratch Files
+      label: Lưu trữ File nháp (Scratch Files)
       description: |
-        Should scratch files be archived? This will create a zip file containing the scratch files used by the script during the conversion process. If not selected, this will default to `false`.
+        Có nên lưu lại các file nháp không? Thao tác này sẽ tạo một file zip chứa các file tạm được sử dụng trong quá trình chuyển đổi. Mặc định là `false`.
       options:
         - 'true'
         - 'false'
   - type: dropdown
     id: rename-model-files
     attributes:
-      label: Rename Model Files
+      label: Đổi tên file Model
       description: |
-        Should scratch files be renamed to reduce path length? If not selected, this will default to `false`.
+        Có nên đổi tên file model để giảm độ dài đường dẫn không? Mặc định là `false`.
       options:
         - 'true'
         - 'false'
   - type: dropdown
     id: font-conversion
     attributes:
-      label: Font Conversion
+      label: Chuyển đổi Font chữ
       description: |
-        Enable font conversion (Can Error) default `false`.
+        Bật tính năng chuyển đổi font (Có thể gây lỗi). Mặc định là `false`.
       options:
         - 'true'
         - 'false'
   - type: dropdown
     id: armor-conversion
     attributes:
-      label: Armor Conversion
+      label: Chuyển đổi Giáp
       description: |
-        Enable armor conversion (Only Itemsadder) default `false`.
+        Bật tính năng chuyển đổi giáp (Chỉ hỗ trợ ItemsAdder). Mặc định là `false`.
       options:
         - 'true'
         - 'false'
   - type: dropdown
     id: meg3-fix
     attributes:
-      label: Meg3 Fix
+      label: Sửa lỗi Meg3
       description: |
-        Fix Black Model for MEG3 default `false`.
+        Sửa lỗi model bị đen cho MEG3. Mặc định là `false`.
       options:
         - 'true'
         - 'false'
   - type: dropdown
     id: sounds-conversion
     attributes:
-      label: Sounds Conversion
+      label: Chuyển đổi Âm thanh
       description: |
-        Conversion Sounds default `false`.
+        Bật tính năng chuyển đổi âm thanh. Mặc định là `false`.
       options:
         - 'true'
         - 'false'
   - type: dropdown
     id: bow-conversion
     attributes:
-      label: Bow Conversion
+      label: Chuyển đổi Cung
       description: |
-        Conversion Bow default `false`.
+        Bật tính năng chuyển đổi cung. Mặc định là `false`.
       options:
         - 'true'
         - 'false'
   - type: dropdown
     id: shield-conversion
     attributes:
-      label: Shield Conversion
+      label: Chuyển đổi Khiên
       description: |
-        Conversion Shield default `false`, **Not ready for use**
+        Bật tính năng chuyển đổi khiên. Mặc định là `false`. **Chưa sẵn sàng để sử dụng**
       options:
         - 'true'
         - 'false'
   - type: dropdown
     id: block-conversion
     attributes:
-      label: Block Conversion
+      label: Chuyển đổi Khối
       description: |
-        Conversion Block default `false`
+        Bật tính năng chuyển đổi khối. Mặc định là `false`.
       options:
         - 'true'
         - 'false'
   - type: checkboxes
     id: terms
     attributes:
-      label: Code of Conduct
+      label: Quy tắc Ứng xử
       description: |
-        By submitting this issue, you agree to follow our [Code of Conduct](https://github.com/Kas-tle/java2bedrock.sh/blob/main/CODE_OF_CONDUCT.md)
-        You further agree that you either own or have permission to use any content you have linked to within this form.
+        Bằng việc gửi issue này, bạn đồng ý tuân theo [Quy tắc ứng xử](https://github.com/Kas-tle/java2bedrock.sh/blob/main/CODE_OF_CONDUCT.md) của chúng tôi.
+        Bạn cũng đồng ý rằng bạn sở hữu hoặc có quyền sử dụng tất cả nội dung bạn đã liên kết trong biểu mẫu này.
       options:
-        - label: I agree to follow this project's Code of Conduct. I have permission to use all assets I have linked to within this form.
+        - label: Tôi đồng ý tuân theo Quy tắc ứng xử của dự án. Tôi có quyền sử dụng tất cả các tài sản mà tôi đã liên kết trong biểu mẫu này.
           required: true
